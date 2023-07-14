@@ -1,0 +1,71 @@
+<div class="login-form">
+    <form action="/" method="post">
+        <div class="form-control">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" />
+            <h5 id="username_error"></h5>
+        </div>
+        <div class="form-control">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" />
+            <h5 id="password_error"></h5>
+        </div>
+        <div class="form-control">
+            <label for="remember_me">Remember me</label><input type="checkbox" id="remember_me" name="remember_me" />
+        </div>
+        <a href="#" class="forgot-password">Forgot Password?</a>
+        <a href="/register" class="create-account">Sign Up</a>
+
+        <button type="submit" id="submit" class="btn">Log In</button>
+    </form>
+</div>
+
+{{#if message}}
+    <h1>{{message.type}}</h1>
+    <h1>{{message.message}}</h1>
+{{/if}}
+
+<script>
+    $(document).ready(function () {
+        $("#submit").click(function () {
+            const username = $("#username").val();
+            const password = $("#password").val();
+
+            if(username === ""){
+                $("#username_error").html("**The username must be filled out!");
+                $("#username_error").css("color", "red");
+                return false;
+            }
+            else if((username.length <= 2) || (username.length >= 26)){
+                $("#username_error").html("**The username must be between 3 and 25 characters!");
+                $("#username_error").css("color", "red");
+                return false;
+            }
+            else if (!isNaN(username)){
+                $("#username_error").html("**The username must be characters!");
+                $("#username_error").css("color", "red");
+                return false;
+            }
+            else if(!isNaN(username.charAt(0))){
+                $("#username_error").html("**The username must be start with characters!");
+                $("#username_error").css("color", "red");
+                return false;
+            }
+            else if(!username.match(/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/)){
+                $("#username_error").html("**The username must be characters, numbers, underscore and hyphen!");
+                $("#username_error").css("color", "red");
+                return false;
+            }
+            if (password === ""){
+                $("#password_error").html("**The password must be filled out!");
+                $("#password_error").css("color", "red");
+                return false
+            }
+            else if(password.length <=5){
+                $("#password_error").html("**The password must be at least 6 characters!");
+                $("#password_error").css("color", "red");
+                return false
+            }
+        })
+    })
+</script>

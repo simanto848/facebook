@@ -1,0 +1,151 @@
+{{{body}}}
+
+<div class="signup-body">
+    <p class="account-create">Create an account</p>
+    <form action="/register" method="post" class="signup-form">
+        <div class="form-control">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" />
+            <h5 id="username_error"></h5>
+        </div>
+        <div class="form-control">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" />
+            <h5 id="email_error"></h5>
+        </div>
+        <div class="form-control">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" />
+            <h5 id="password_error"></h5>
+        </div>
+        <div class="form-control">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" />
+            <h5 id="confirm_password_error"></h5>
+        </div>
+        <button type="submit" id="submit" class="btn" style="margin: 0">Sign Up</button>
+    </form>
+</div>
+
+{{#if message}}
+    <div>
+        <p>{{message.type}}</p>
+        <h2>{{message.message}}</h2>
+    </div>
+
+{{/if}}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#username_error").hide();
+        $("#email_error").hide();
+        $("#password_error").hide();
+        $("#confirm_password_error").hide();
+
+        let username_error = true;
+        let email_error = true;
+        let password_error = true;
+        let confirm_password_error = true;
+
+        $("#username").keyup(function () {
+            username_check()
+        })
+        function username_check(){
+            let username_val = $("#username").val();
+            if(username_val === ""){
+                $("#username_error").show();
+                $("#username_error").html("Username is required");
+                $("#username_error").focus();
+                $("#username_error").css("color", "red");
+                username_error = false;
+                return false;
+            }
+            else if (username_val.length < 3 || username_val.length > 26) {
+                $("#username_error").show();
+                $("#username_error").html("Username must be between 3 to 25 characters long");
+                $("#username_error").focus();
+                $("#username_error").css("color", "red");
+                username_error = false;
+                return false;
+            } else {
+                $("#username_error").hide();
+            }
+        }
+
+        $("#email").keyup(function () {
+            email_check()
+        })
+        function email_check(){
+            let email_val = $("#email").val();
+            if(email_val === ""){
+                $("#email_error").show();
+                $("#email_error").html("Email is required");
+                $("#email_error").focus();
+                $("#email_error").css("color", "red");
+                email_error = false;
+                return false;
+            }
+            else if (email_val.indexOf("@") <= 0) {
+                $("#email_error").show();
+                $("#email_error").html("Invalid email");
+                $("#email_error").focus();
+                $("#email_error").css("color", "red");
+                email_error = false;
+                return false;
+            } else {
+                $("#email_error").hide();
+            }
+        }
+
+        $("#password").keyup(function () {
+            password_check()
+        })
+        function password_check(){
+            let password_val = $("#password").val();
+            if(password_val === ""){
+                $("#password_error").show();
+                $("#password_error").html("Password is required");
+                $("#password_error").focus();
+                $("#password_error").css("color", "red");
+                password_error = false;
+                return false;
+            }
+            else if (password_val.length < 6) {
+                $("#password_error").show();
+                $("#password_error").html("Password must be at least 6 characters long");
+                $("#password_error").focus();
+                $("#password_error").css("color", "red");
+                password_error = false;
+                return false;
+            } else {
+                $("#password_error").hide();
+            }
+        }
+
+        $("#confirm_password").keyup(function () {
+            confirm_password_check()
+        })
+        function confirm_password_check(){
+            let confirm_password_val = $("#confirm_password").val();
+            let password_val = $("#password").val();
+            if(confirm_password_val === ""){
+                $("#confirm_password_error").show();
+                $("#confirm_password_error").html("Confirm password is required");
+                $("#confirm_password_error").focus();
+                $("#confirm_password_error").css("color", "red");
+                confirm_password_error = false;
+                return false;
+            }
+            else if (confirm_password_val !== password_val) {
+                $("#confirm_password_error").show();
+                $("#confirm_password_error").html("Passwords do not match");
+                $("#confirm_password_error").focus();
+                $("#confirm_password_error").css("color", "red");
+                confirm_password_error = false;
+                return false;
+            } else {
+                $("#confirm_password_error").hide();
+            }
+        }
+    })
+</script>
